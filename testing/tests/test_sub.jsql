@@ -1,0 +1,4 @@
+Number a = 2
+Number b = 1
+
+print a - b
