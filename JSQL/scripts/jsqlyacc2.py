@@ -9,25 +9,13 @@ import java.util.*;
 public class JSQLClass {
 
      __BODY__
-}
-'''
 
-'''
-Number main() {
-    
-    print "Hello world";
-    Number num1 = 10;
-    Number num2 = 11;
-    print num1 + num2;
-    print (num1 + num2);
-    Json js1 = "{ 'First Name' : 'Abhyuday', 'Last Name' : 'Polineni' }";
-    Json js2 = "{ 'First Name' : 'Akhilesh', 'Last Name' : 'Mantripragada' }";
-    Json js3 = (js1 + js2);
 }
 '''
 
 s = '''
-void main() {
+void main()
+{
     Number num1 = 10;
     Number num2 = 11;
     Number num3 = num1 + num2;
@@ -57,7 +45,7 @@ else:
     print 'Compiled Successfully'
 
 try:
-    p1 = sub.Popen(["java JSQLClass"],stdout=sub.PIPE)
+    p1 = sub.Popen(["java JSQLClass"],stdout=sub.PIPE,shell = True)
     out2 = p1.stdout.read()
     print out2
 except IOError as err1:
