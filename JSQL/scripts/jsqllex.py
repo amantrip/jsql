@@ -20,12 +20,12 @@ tokens = reserved + (
     # Literals (identifier, Number constant, string constant)
     'ID', 'NCONST', 'SCONST',
     
-    # Operators (+,-,*,/,%,|,&,~,^, ||, &&, !, <, <=, >, >=, ==, !=, ~~, ^^)
+    # Operators (+,-,*,/,%,|,&,~,^, ||, &&, !, <, <=, >, >=, ==, !=, ~~, ^^, <<, >>)
     'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'MOD',
     'OR', 'AND', 'NOT', 'XOR', 
     'LOR', 'LAND', 'LNOT',
     'LT', 'LE', 'GT', 'GE', 'EQ', 'NE',
-    'UNION', 'INTERSECTION',
+    'UNION', 'INTERSECTION', 'JPLUS', 'JMINUS',
     
     # Assignment (=, *=, /=, %=, +=, -=, &=, ^=, |=)
     'EQUALS', 'TIMESEQUAL', 'DIVEQUAL', 'MODEQUAL', 'PLUSEQUAL', 'MINUSEQUAL',
@@ -71,6 +71,8 @@ t_EQ               = r'=='
 t_NE               = r'!='
 t_UNION            = r'<>'
 t_INTERSECTION     = r'><'
+t_JPLUS            = r'<<'
+t_JMINUS           = r'>>'
 
 # Assignment operators
 
@@ -151,9 +153,10 @@ main() {
     Number num1 = 10;
     Number num2 = 11;
     print num1 + num2;
-    Json js1 = { "First Name" : "Abhyuday", "Last Name" : "Polineni" };
+    Json js1 = "{ 'First Name' : 'Abhyuday', 'Last Name' : 'Polineni' }";
     Jso2 js2 = { "First Name" : "Akhilesh", "Last Name" : "Mantripragada" };
     print js1 + js2;
+    System.out.println(js1+js2);
 }
 '''
 
