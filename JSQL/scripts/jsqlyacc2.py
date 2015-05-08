@@ -14,7 +14,7 @@ public class JSQLClass {
 '''
 
 s = '''
-void main()
+void main(String args[])
 {
     Number num1 = 10;
     Number num2 = 11;
@@ -38,16 +38,15 @@ except Exception as err:
 try:
     p = sub.Popen(["javac JSQLClass.java"], stdout=sub.PIPE,shell=True)
     out = p.stdout.read()
-    print out
 except Exception as err:
     print err
 else:
     print 'Compiled Successfully'
 
 try:
-    p1 = sub.Popen(["java JSQLClass"],stdout=sub.PIPE,shell = True)
-    out2 = p1.stdout.read()
-    print out2
+    p1 = sub.Popen(["java JSQLClass"],stdout=sub.PIPE,shell=True).stdout.read()
+    print 'jejejej'
+    print p1
 except IOError as err1:
     print err1
 except ArithmeticError as arithmeticError:
@@ -55,8 +54,4 @@ except ArithmeticError as arithmeticError:
 except Exception as err2:
     s = "Could not run Successfully"
     print s
-
-
-
-
 
