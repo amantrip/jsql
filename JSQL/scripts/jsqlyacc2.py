@@ -1,11 +1,13 @@
-# dictionary of variable types
-symbols = { }
+import os
+import codecs
+import subprocess as sub
+from jsqlyacc import yacc
 
+javatemplate = '''
+import java.util.*;
 
-header = ""
-functions = ""
+public class JSQLClass {
 
-<<<<<<< HEAD
      __BODY__
 
 }
@@ -58,19 +60,3 @@ except Exception as err2:
 
 
 
-
-=======
-def p_start(t):
-	'start : statement'
-	global body
-	body = t[1]
-    
-def p_statement_conc(t):
-	'statement : statement statement'
-	t[0] = "%s\n %s"%(t[1],t[2])
-
-def p_statement_value(t):
-	'statement : value'
-	print "asddd"
-	t[0] = "%s;"%t[1]
->>>>>>> 404cb27e8b8439f799178bfeaeb8a3855deb5c8e
