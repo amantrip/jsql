@@ -7,6 +7,14 @@ package jsonworker;
 import org.json.simple.JSONObject;//.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 
 import java.util.*;
 /**
@@ -32,6 +40,41 @@ public class JsonWorker {
         }   
     }
         
+    public void writeToFile(String fileName){
+        Writer writer = null;
+
+        try {
+            writer = new BufferedWriter(new OutputStreamWriter(
+                  new FileOutputStream(fileName), "utf-8"));
+            writer.write(this.toString());
+        } catch (IOException ex) {
+        } finally {
+           try {writer.close();} catch (Exception ex)
+        }
+    }
+
+    public JsonWorker readFile(String fileName) throws FileNotFoundException, IOException, ParseException{
+        String everything;
+        BufferedReader br = new BufferedReader(new FileReader(fileName));
+         try {
+             StringBuilder sb = new StringBuilder();
+             String line = br.readLine();
+
+             while (line != null) {
+                 sb.append(line);
+                 sb.append(System.lineSeparator());
+                 line = br.readLine();
+             }
+             everything = sb.toString();
+         } finally {
+             br.close();
+         }
+         return new JsonWorker(everything);
+    }
+    
+    public String toString(){
+        return thisObj.toString();
+    }
     
     public JSONObject adder(JSONObject obj){
         JSONObject sum = new JSONObject();
