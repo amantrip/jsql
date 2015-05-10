@@ -1,3 +1,15 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import jsonworker.JsonWorker;
 import java.util.ArrayList;
 import org.json.simple.JSONObject;
@@ -16,6 +28,74 @@ public class JsonList {
         for(int i = 0; i<list.length; i++){
             jsonList.add(list[i]);
         }
+    }
+
+    // helper function that parses string into array of JsonWorker objects
+    JsonWorker[] parseJsonList(String str) throws ParseException{
+        String parseableString = "[" + str.substring(1, str.length() - 2) + "]";
+         JSONParser parser=new JSONParser();
+         try{
+            Object obj = parser.parse(parseableString);
+            JSONArray jsonArray = (JSONArray)obj;
+            JsonWorker[] arr = new JsonWorker[jsonArray.size()];
+            for(int i = 0; i<arr.length; i++){
+                arr[i] = new JsonWorker(jsonArray.get(i).toString());
+            }
+            return arr;
+         }catch(ParseException pe){
+            System.out.println("position: " + pe.getPosition());
+            System.out.println(pe);
+            throw pe;
+         }
+    }
+
+    // parses the text in fileName and returns the equivalent JsonList object 
+    public JsonList readFile(String fileName) throws FileNotFoundException, IOException, ParseException{
+        String in;
+        BufferedReader br = new BufferedReader(new FileReader(fileName));
+         try {
+             StringBuilder sb = new StringBuilder();
+             String line = br.readLine();
+
+             while (line != null) {
+                 sb.append(line);
+                 sb.append(System.lineSeparator());
+                 line = br.readLine();
+             }
+             in = sb.toString();
+         } finally {
+             br.close();
+         }
+                  
+         return new JsonList(parseJsonList(in));
+    }
+    
+    // converts jsonList to a string and writes it to fileName
+    public void writeToFile(String fileName){
+        Writer writer = null;
+
+        try {
+            writer = new BufferedWriter(new OutputStreamWriter(
+                  new FileOutputStream(fileName), "utf-8"));
+            writer.write(this.toString());
+        } catch (IOException ex) {
+          // report
+        } finally {
+           try {writer.close();} catch (Exception ex) {/*ignore*/}
+        }
+    }
+    
+    // converts JsonList to a string
+    public String toString(){
+        String str = "{";
+        for(int i = 0; i<jsonList.size(); i++){
+            str += jsonList.get(i).toString();
+            if(i != jsonList.size() - 1){
+                str += ", ";
+            }                    
+        }
+        str += "}";
+        return str;
     }
 
     // Adds an jsonWorker to the end of JsonList
