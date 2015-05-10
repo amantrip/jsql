@@ -1,0 +1,6 @@
+main(){
+	Number x = 4
+	Number y = 2
+
+	print x / y
+}

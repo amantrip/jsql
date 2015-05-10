@@ -1,0 +1,2 @@
+//Result of subtracting json object 2 from 1
+{ "Username": "Nats", “Password": “password”, Age":23, "Courses": [ "CV", “PLT ] }

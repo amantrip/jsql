@@ -1,0 +1,9 @@
+main(){
+	Number x = 5
+	Number y = 3
+
+	if(x>y)
+	print true
+	else 
+	print false
+}
