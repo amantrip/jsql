@@ -1,34 +1,30 @@
-
 import jsonworker.JsonWorker;
 import java.util.ArrayList;
 import org.json.simple.JSONObject;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/**
- *
- * @author Seth
- */
+// JsonList is a ArrayList of JsonWorker objects
 public class JsonList {
 
     ArrayList<JsonWorker> jsonList = new ArrayList<JsonWorker>();
     private Pattern mPattern = Pattern.compile("/^(select)\s+([a-z0-9_\,\.\s\*]+)\s+from\s+([a-z0-9_\.]+)(?: where\s+\((.+)\))?\s*(?:order\sby\s+([a-z0-9_\,]+))?\s*(asc|desc|ascnum|descnum)?\s*(?:limit\s+([0-9_\,]+))?/i");
-    
+
+    // Constructor takes in an array of JsonWorker objects and creates the 
+    // ArrayList of out of them    
     public JsonList(JsonWorker[] list){
         for(int i = 0; i<list.length; i++){
             jsonList.add(list[i]);
         }
     }
 
+    // Adds an jsonWorker to the end of JsonList
     public void addObj(JsonWorker json){
         jsonList.add(json);        
     }
     
+
+    // Removes the JsonWoker at index from JsonList
     public JsonWorker removeObj(int index){
         return jsonList.remove(index);        
     }
