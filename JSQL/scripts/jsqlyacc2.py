@@ -1,4 +1,4 @@
-import os
+import glob
 import codecs
 import subprocess
 from jsqlyacc import yacc
@@ -14,19 +14,14 @@ public class JSQLClass {
 }
 '''
 
-s = '''
-void main(String args[])
-{
-    Number num1 = 10;
-    Number num2 = "helo";
-    Number num3 = num1 + num2;
-    print "Hello world";
-    print num1 + num2;
-    print (num1 + num2);
-}
-'''
+for filename in glob.glob1('.','*.jsql'):
+    file = filename
+
+filebuffer = open(file,'r')
+x = filebuffer.read()
+
 try:
-    body = yacc.parse(s)
+    body = yacc.parse(x)
     #file_name = os.path.splitext("path_to_file")[0]
     file_name = "JSQLClass.java"
     outfile = codecs.open(file_name, encoding = 'utf-8', mode = 'w')
@@ -34,7 +29,6 @@ try:
     outfile.close()
 except Exception as err:
     print err
-
 
 
 proc = subprocess.Popen('javac JSQLClass.java',
@@ -67,26 +61,4 @@ try:
     print o
 except Exception as err:
     print err
-
-
-
-
-#try:
- #   p = sub.Popen(["javac JSQLClass.java"], stdout=sub.PIPE,shell=True)
-  #  out = p.stdout.read()
-#except TypeError as err:
- #   print err
-#else:
- #   print 'sds'
-
-#try:
- #   p1 = sub.Popen(["java JSQLClass"],stdout=sub.PIPE,shell=True).stdout.read()
-  #  print p1
-#except IOError as err1:
- #   print err1
-#except ArithmeticError as arithmeticError:
- #   print "Error in Arithmetic Calculations"
-#except Exception as err2:
- #   s = "Could not run Successfully"
-  #  print s
 
