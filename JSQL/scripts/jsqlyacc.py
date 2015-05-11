@@ -3,13 +3,16 @@ import ply.yacc as yacc
 # Get the token map from the lexer.  This is required.
 from jsqllex import tokens
 
+
+symbols = {}
+
 # translation-unit:
 
 def p_translation_unit_1(t):
     'translation_unit : external_declaration'
-    print "p_translation_unit_1"
+    #print "p_translation_unit_1"
     t[0] = t[1]
-    print t[0]
+    #print t[0]
     pass
 
 def p_translation_unit_2(t):
@@ -287,7 +290,6 @@ def p_parameter_list_1(t):
 
 def p_parameter_list_2(t):
     'parameter_list : parameter_list COMMA parameter_declaration'
-    print "p_parameter_list_2"
     t[0] = t[1] + t[2] + t[3]
     print t[0]
     pass
@@ -295,7 +297,6 @@ def p_parameter_list_2(t):
 # parameter-declaration:
 def p_parameter_declaration_1(t):
     'parameter_declaration : declaration_specifiers declarator'
-    print "p_parameter_declaration_1"
     t[0] = t[1] + t[2]
     print t[0]
     pass
@@ -553,7 +554,6 @@ def p_assignment_expression_1(t):
 
 def p_assignment_expression_2(t):
     'assignment_expression : unary_expression assignment_operator assignment_expression'
-    print "p_assignment_expression_2"
     t[0] = t[1] + t[2] + t[3]
     print t[0]
     pass
@@ -957,6 +957,33 @@ def p_empty(t):
     print "p_empty"
     print t[0]
     pass
+
+
+def get_type(x):
+
+    if x in symbols:
+        return symbols[x]
+    elif is_num_literal(x):
+        return 'double'
+    elif is_text_literal(x):
+        return 'String'
+    elif is_indexed_array(x):
+        return get_indexed_array_type(x)
+    else:
+		return None
+
+def is_num_literal(x):
+	return x.isdigit()
+
+def is_text_literal(x):
+	return x.startswith('"') and x.endswith('"')
+
+def is_indexed_array(x):
+    return 'abc' #re.match('^[a-zA-Z0-9_]+\[\d+\]$')
+
+def get_indexed_array_type(x):
+	array = x.split('[')[0]
+	return get_type(array)
 
 
 def p_error(p):
