@@ -1,9 +1,9 @@
 main(){
-	Number x = 5
-	Number y = 3
+	Number x = 5;
+	Number y = 3;
 
 	if(x<y)
-	print true
+	print true;
 	else 
-	print false
+	print false;
 }

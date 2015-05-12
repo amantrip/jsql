@@ -1,6 +1,6 @@
 main(){
-	Number a = 1
-	Number b = 2
+	Number a = 1;
+	Number b = 2;
 
-	print a + b
+	print a + b;
 }
