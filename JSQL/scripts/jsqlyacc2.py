@@ -50,7 +50,7 @@ else:
 
 
 try:
-    proc1 = subprocess.Popen('java -cp ~/Documents/PLT/jsql/JSQL/org/json/simple/parser '+fileN,
+    proc1 = subprocess.Popen('java'+fileN,
                         shell=True,
                         stdin=subprocess.PIPE,
                         stdout=subprocess.PIPE,
