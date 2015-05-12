@@ -1,0 +1,2 @@
+//Result of adding json object 1 to 2
+{ "Name": { "First":"Natasha", "Last":"Kenkre" }, "Username":"Natasha", “Password": “password2”, “City” : “NewYork”, Age":23, "Courses": [ "ML", “PLT" ]}

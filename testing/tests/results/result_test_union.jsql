@@ -1,0 +1,2 @@
+//Result of union of json object 1 and 2
+{ "Name": { "First":"Natasha", "Last":"Kenkre" }, "Username": ["Nats",”Natasha”], “Password": {“password”, “password2”}, Age":23, "Courses": [ "ML", “PLT ], “City”: “NewYork” }

@@ -1,0 +1,7 @@
+main(){
+	Number x = 1;
+	Number y = 2;
+	Number z = 3;
+
+	print x + y + z;
+}

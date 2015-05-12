@@ -1,0 +1,8 @@
+main(){
+
+Json account1 = { "Name": { "First":"Natasha", "Last":"Kenkre" }, "Username": "Nats", “Password": “password”, Age":23, "Courses": [ "ML", “PLT ] }
+
+Json account2 = { "Name": { "First":"Natasha", "Last":"Kenkre" }, "Username": "Natasha", “Password": “password2”, “City” : “NewYork”}
+
+print account1 << account2
+}

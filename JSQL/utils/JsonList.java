@@ -1,34 +1,110 @@
-
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import jsonworker.JsonWorker;
 import java.util.ArrayList;
 import org.json.simple.JSONObject;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/**
- *
- * @author Seth
- */
+// JsonList is a ArrayList of JsonWorker objects
 public class JsonList {
 
     ArrayList<JsonWorker> jsonList = new ArrayList<JsonWorker>();
     private Pattern mPattern = Pattern.compile("/^(select)\s+([a-z0-9_\,\.\s\*]+)\s+from\s+([a-z0-9_\.]+)(?: where\s+\((.+)\))?\s*(?:order\sby\s+([a-z0-9_\,]+))?\s*(asc|desc|ascnum|descnum)?\s*(?:limit\s+([0-9_\,]+))?/i");
-    
+
+    // Constructor takes in an array of JsonWorker objects and creates the 
+    // ArrayList of out of them    
     public JsonList(JsonWorker[] list){
         for(int i = 0; i<list.length; i++){
             jsonList.add(list[i]);
         }
     }
 
+    // helper function that parses string into array of JsonWorker objects
+    JsonWorker[] parseJsonList(String str) throws ParseException{
+        String parseableString = "[" + str.substring(1, str.length() - 2) + "]";
+         JSONParser parser=new JSONParser();
+         try{
+            Object obj = parser.parse(parseableString);
+            JSONArray jsonArray = (JSONArray)obj;
+            JsonWorker[] arr = new JsonWorker[jsonArray.size()];
+            for(int i = 0; i<arr.length; i++){
+                arr[i] = new JsonWorker(jsonArray.get(i).toString());
+            }
+            return arr;
+         }catch(ParseException pe){
+            System.out.println("position: " + pe.getPosition());
+            System.out.println(pe);
+            throw pe;
+         }
+    }
+
+    // parses the text in fileName and returns the equivalent JsonList object 
+    public JsonList readFile(String fileName) throws FileNotFoundException, IOException, ParseException{
+        String in;
+        BufferedReader br = new BufferedReader(new FileReader(fileName));
+         try {
+             StringBuilder sb = new StringBuilder();
+             String line = br.readLine();
+
+             while (line != null) {
+                 sb.append(line);
+                 sb.append(System.lineSeparator());
+                 line = br.readLine();
+             }
+             in = sb.toString();
+         } finally {
+             br.close();
+         }
+                  
+         return new JsonList(parseJsonList(in));
+    }
+    
+    // converts jsonList to a string and writes it to fileName
+    public void writeToFile(String fileName){
+        Writer writer = null;
+
+        try {
+            writer = new BufferedWriter(new OutputStreamWriter(
+                  new FileOutputStream(fileName), "utf-8"));
+            writer.write(this.toString());
+        } catch (IOException ex) {
+          // report
+        } finally {
+           try {writer.close();} catch (Exception ex) {/*ignore*/}
+        }
+    }
+    
+    // converts JsonList to a string
+    public String toString(){
+        String str = "{";
+        for(int i = 0; i<jsonList.size(); i++){
+            str += jsonList.get(i).toString();
+            if(i != jsonList.size() - 1){
+                str += ", ";
+            }                    
+        }
+        str += "}";
+        return str;
+    }
+
+    // Adds an jsonWorker to the end of JsonList
     public void addObj(JsonWorker json){
         jsonList.add(json);        
     }
     
+
+    // Removes the JsonWoker at index from JsonList
     public JsonWorker removeObj(int index){
         return jsonList.remove(index);        
     }
